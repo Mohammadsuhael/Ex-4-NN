@@ -116,6 +116,7 @@ Normalize our dataset.
 
 <H3>Program:</H3> 
 
+
 ```
 import pandas as pd
 
@@ -178,6 +179,34 @@ print(classification_report(y_test, y_pred))
 
 Show your results here
 Thus, MLP is implemented for multi-classification using python.
+
+```
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+data=pd.read_csv("iris.csv")
+
+X=data.iloc[:,:-1]
+y=data.iloc[:,-1]
+
+Xtr,Xte,ytr,yte=train_test_split(X,y,test_size=.2,random_state=42)
+
+sc=StandardScaler()
+Xtr=sc.fit_transform(Xtr)
+Xte=sc.transform(Xte)
+
+model=MLPClassifier(hidden_layer_sizes=(10,),max_iter=1000,random_state=42)
+model.fit(Xtr,ytr)
+
+p=model.predict(Xte)
+
+print("Accuracy:",accuracy_score(yte,p)*100,"%")
+print("Confusion Matrix:\n",confusion_matrix(yte,p))
+print("Report:\n",classification_report(yte,p))
+```
 
 <H3>Result:</H3>
 Thus, MLP is implemented for multi-classification using python.
